@@ -114,7 +114,18 @@ function buildPlot(){
 		console.log(recipeData[9].minutes);
 
 	    let filteredData = recipeData.filter(d => d.voters >= minVoters && d.voters <= maxVoters);
-		let sortedData = filteredData.sort((a,b) => b[sort1] - a[sort1]);
+		let sortedData;
+		if (sort2 != ""){
+			sortedData = filteredData.sort((a,b) => {
+				if (b[sort1] === a[sort1]){
+					return b[sort2] - a[sort2];
+				}
+				return b[sort1] > a[sort1] ? 1 : -1;
+			});
+		}
+		else {
+			sortedData = filteredData.sort((a,b) => b[sort1] - a[sort1]);
+		}
 		console.log(sortedData);
 
 	    console.log(filteredData);
