@@ -1,18 +1,19 @@
-nav {
-  background-color: rgb(233, 211, 85);
-  font-weight: bold;
-  color: black;
-  text-align: center;
-}
-
 #footer {
-  background-color: rgb(233, 211, 85);
-  font-weight: bold;
+  background-color: rgb(160, 227, 239);
+  font-weight: normal;
   color: black;
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 0px;
+}
+
+#warning{
+  background-color: rgb(242, 109, 109);
+  color: whitesmoke;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
 }
    
 .topbar-center-logo-mobile .menu-icon {
@@ -41,7 +42,7 @@ h1 {
 }
   
 h2 {
-  color : black;
+  color : #3fccff;
   text-align: center;
   font-weight: bold;
 }
@@ -52,17 +53,22 @@ h3 {
 }
   
 h4 {
-  color : black;
+  color: rgb(11, 94, 112);
   text-align: center;
 }
 
 body {
   color: cornsilk;
-  background-color: rgb(247, 237, 204);
+  background-color: rgb(83, 191, 210);
 }
-.battle-section {
-  background-color: rgb(247, 237, 204);
-  margin-bottom: 20px;
+
+a,a:hover {
+  color: rgb(198, 65, 216);
+}
+
+.recipe-display {
+  background-color:rgb(160, 227, 239);
+  color: rgb(11, 94, 112);
 }
 
 .container {
@@ -70,42 +76,8 @@ body {
   padding-right: 20px;
 }
 
-tbody {
-  padding: 15px;
-  text-align: left;
-  font-size: 12pt;
-}
-
-th {
-  padding: 2px;
-  font-size: 12pt;
-}
-
-td {
-  padding-left: 5px;
-}
-
-
-.btn-danger {
+#selRecipeData {
   color: black;
-  align-content: center;
-}
-
-.pokemoncard {
-  text-align: center;
-  border-color: black;
-  border-style: double;
-  width: fit-content;
-  background-color: wheat;
-  margin: auto;
-  margin-top: 0px;
-  margin-bottom: 20px;
-  padding: 20px;
-  color: black;
-}
-
-.filter-header {
-  background-color: red;
 }
 
 .button1 {
@@ -119,7 +91,7 @@ td {
  color: black;
 }
 
-#filter-btn, #filter-btn2, #filter-gen, #filter-graph, #filter-pokedex, #view-stats, #name-search { 
+#filter-charts { 
   background-color: #e7e7e7; 
   color: black;
   align-content: center;
@@ -134,147 +106,6 @@ td {
   font-size: 12pt;
 }
 
-
-/* Everything below here is needed for the D3 graph on graph.html */
-.aText {
-  font-family: sans-serif;
-  font-size: 16px;
-  text-anchor: middle;
-}
-
-.active {
-  font-weight: bold;
-  fill: #000;
-  transition: fill 0.3s ease-out;
-  text-anchor: middle;
-}
-
-.inactive {
-  font-weight: lighter;
-  fill: #c9c9c9;
-  transition: fill 0.3s ease-out;
-  text-anchor: middle;
-}
-
-.inactive {
-  outline-color: red;  
-}
-
-.inactive:hover {
-  stroke: #000;
-  cursor: pointer;
-}
-
-circle {
-  opacity: 80%;
-}
-
-.stateCircle {
-  fill: #89bdd3; 
-  stroke: #e3e3e3;
-}
-
-.poisonCircle {
-  fill: purple; 
-  stroke: #e3e3e3;
-}
-
-.fireCircle {
-  fill: orange; 
-  stroke: #e3e3e3;
-}
-
-.grassCircle{
-  fill: green; 
-  stroke: #e3e3e3;
-}
-.waterCircle {
-  fill: blue; 
-  stroke: #e3e3e3;
-}
-.bugCircle {
-  fill: lavender; 
-  stroke: #e3e3e3;
-}
-.normalCircle {
-  fill: plum; 
-  stroke: #e3e3e3;
-}
-.electricCircle {
-  fill: yellow; 
-  stroke: #e3e3e3;
-}
-.groundCircle {
-  fill: brown; 
-  stroke: #e3e3e3;
-}
-.fairyCircle {
-  fill: pink; 
-  stroke: #e3e3e3;
-}
-.fightingCircle {
-  fill: red; 
-  stroke: #e3e3e3;
-}
-.psychicCircle {
-  fill: cyan; 
-  stroke: #e3e3e3;
-}
-.rockCircle {
-  fill: gray; 
-  stroke: #e3e3e3;
-}
-.ghostCircle {
-  fill: #dddddd; 
-  stroke: #e3e3e3;
-  opacity: 60%;
-}
-.iceCircle {
-  fill: #13d3dd; 
-  stroke: #e3e3e3;
-}
-.dragonCircle {
-  fill: #d35313; 
-  stroke: #e3e3e3;
-}
-.darkCircle {
-  fill: #333333; 
-  stroke: #e3e3e3;
-}
-.steelCircle {
-  fill: #d3d3d3; 
-  stroke: #e3e3e3;
-}
-.flyingCircle {
-  fill: #14d314; 
-  stroke: #e3e3e3;
-}
-
-.circleActive {
-  fill: pink; 
-  stroke: red;
-}
-
-.chart {
-  display: block;
-  margin: 0;
-}
-
-.d3-tip {
-  padding: 6px;
-  font-size: 12px;
-  line-height: 1;
-  line-height: 1.5em;
-  color: #fff;
-  text-align: center;
-  text-transform: capitalize;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 4px;
-}
-
-.pokemon-chart path, line, text {
-  stroke: black;
-}
 
 #scatter {
   padding-bottom: 20px;

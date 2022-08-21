@@ -34,7 +34,7 @@ function buildPlot(){
 	let maxRating = parseInt(d3.select("#input-max-rating").property("value"));
 	let minMinutes = parseInt(d3.select("#input-min-minutes").property("value"));
 	let maxMinutes = parseInt(d3.select("#input-max-minutes").property("value"));
-	let filterIngredient = d3.select("#input-ingredient").property("value");
+	let filterIngredient = d3.select("#input-ingredient").property("value").toLowerCase();
 	//console.log("filterIngredient: ", filterIngredient);
 
 	/*
@@ -148,6 +148,7 @@ function buildPlot(){
 			text: dataToChart.recipeNames,
 			mode: "markers",
 			type: "scatter",
+			marker: {color: "rgb(83, 191, 210)"}
 		};
 		let scatterData = [trace2];
 
@@ -160,7 +161,8 @@ function buildPlot(){
 			},
 			yaxis: {
 				title: scatterY
-			}
+			},
+			plot_bgcolor: '#dddddd'
 		};
 
 		console.log("Displaying scatter chart");
@@ -187,7 +189,8 @@ function buildPlot(){
 			y: topTen.labels,
 			text: topTen.names,
 			type: "bar",
-			orientation: "h"
+			orientation: "h",
+			marker: {color: "orange"}
 		}
 
 		let barData = [trace1];
@@ -249,10 +252,10 @@ function displayRecipe(ID){
 		recipeText.html("")
 		
 		recipeText.append("p")
-			.html(`Recipe: <a href="https://www.food.com/recipe/${showRecipe[0].recipe_id}">${showRecipe[0].name}</a>`);
+			.html(`Recipe: <a href="https://www.food.com/recipe/${showRecipe[0].recipe_id}" target="_blank">${showRecipe[0].name}</a>`);
 
 		recipeText.append("p")
-			.html(`Ingredients: ${showRecipe[0].ingredients}<br />\n
+			.html(`Ingredients: ${showRecipe[0].ingredients.replace(/\[|\]|\'/g,'')}<br />\n
 			Number of Steps: ${showRecipe[0].n_steps}<br />\n
 			Minutes to Cook: ${showRecipe[0].minutes}<br />\n
 			Rating: ${showRecipe[0].rating}<br />\n
