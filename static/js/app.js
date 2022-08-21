@@ -91,21 +91,23 @@ function buildPlot(){
 	let maxVoters = parseInt(d3.select("#input-max-voters").property("value"));
 	let minRating = parseInt(d3.select("#input-min-rating").property("value"));
 	let maxRating = parseInt(d3.select("#input-max-rating").property("value"));
+	let minMinutes = parseInt(d3.select("#input-min-minutes").property("value"));
+	let maxMinutes = parseInt(d3.select("#input-max-minutes").property("value"));
 
-
+	/*
 	console.log(scatterX);
 	console.log(scatterY);
 	console.log(sort1);
-	console.log(sort2);
+	console.log(sort2);*/
 
 	if (sort1 == ""){
 		sort1 = "voters";
 	};
-
+/*
 	console.log(typeof minVoters);
 	console.log(minVoters);
 	console.log(maxVoters);
-
+*/
 	// Check voters values are valid, otherwise set default
 	if (isNaN(minVoters)){
 		minVoters=0;
@@ -121,10 +123,20 @@ function buildPlot(){
 	if (isNaN(maxRating)){
 		maxRating=5;
 	};
-
+/*
 	console.log(typeof minRating);
 	console.log(minRating);
 	console.log(maxRating);
+*/
+
+	// Check minutes values are valid, otherwise set default
+	if (isNaN(minMinutes)){
+		minMinutes=0;
+	};
+	if (isNaN(maxMinutes)){
+		maxMinutes=15000;
+	};
+
 
 	dataPromise.then(function(data) {
 		let recipeData = data.data;
@@ -132,7 +144,9 @@ function buildPlot(){
 		console.log(recipeData[9].minutes);
 
 	    let filteredData = recipeData.filter(d => {
-			return d.voters >= minVoters && d.voters <= maxVoters && d.rating >= minRating && d.rating <= maxRating
+			return d.voters >= minVoters && d.voters <= maxVoters && 
+			d.rating >= minRating && d.rating <= maxRating &&
+			d.minutes >= minMinutes && d.minutes <= maxMinutes
 		});
 		let sortedData;
 		if (sort2 != ""){
@@ -221,8 +235,6 @@ function buildPlot(){
 
 		// Plot bar chart
 		let trace1 = {
-//			x: topTen.labels,
-//			y: topTen.recipeValues,
 			x: topTen.recipeValues,
 			y: topTen.labels,
 			text: topTen.names,
@@ -250,6 +262,9 @@ function buildPlot(){
 		console.log(recipeMenu);
 		console.log(topTen.ID);
 
+		// Reset options
+		recipeMenu.html("");
+
 		for (let i = 0; i < topTen.ID.length; i++){
 			recipeMenu
 				.append("option")
@@ -260,57 +275,10 @@ function buildPlot(){
 		let searchID = topTen.ID[0];
 		displayRecipe(searchID);
 
-/*
-		recipeMenu.selectAll("option")
-		.data(topTen).enter()
-		.append("option")
-			.attr("value", function (d) { return d.ID; })
-			.text(function (d) { return d.names; });
-		/*
-	    .data(topTen)
-	    .enter()
-	    .append("option")
-	    .attr("value", "Help")
-	    .html("Help");
-
-		/*
-	    .attr("value", function(d){
-			console.log("Hi!")
-			console.log(d)
-	    	return d.ID;
-	    })
-	    .html(function(d){
-	    	return d.names;
-	    });
-		// Plot the bubble chart
-
-		var trace2 = {
-			x: otu_ids,
-			y: sampleValues,
-			text: otu_labels,
-			mode: "markers",
-			type: "scatter",
-			marker: {
-				size: sampleValues,
-				color: otu_ids,
-				colorscale: "Picnic"
-			}
-		};
-
-		var bubbleData = [trace2];
-
-		var bubbleLayout = {
-			title: "Bubble Chart"
-		};
-
-		console.log("Displaying bubble chart");
-		Plotly.newPlot("bubble", bubbleData, bubbleLayout);
-*/
   	});
 };
 
 // function to display the recipe
-
 function displayRecipe(ID){
 	dataPromise.then(function(data) {
 		let recipeData = data.data;
