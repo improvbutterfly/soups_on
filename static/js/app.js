@@ -13,12 +13,13 @@ function init() {
 
 	dataPromise.then(function(data) {
 		//console.log(data);
+/*
 
 	    let recipeID = data.index;
 		let recipeData = data.data;
 	    //console.log(recipeData);
-/*
-	    d3.select("select").selectAll("option")
+
+		d3.select("select").selectAll("option")
 	    .data(recipeID)
 	    .enter()
 	    .append("option")
@@ -162,7 +163,7 @@ function buildPlot(){
 			n_ingredients: []
 		};
 
-		for (let i = 0; i < sortedData.length -1; i++){
+		for (let i = 0; i < sortedData.length; i++){
 			dataToChart.xValues.push(sortedData[i][scatterX]);
 			dataToChart.yValues.push(sortedData[i][scatterY]);
 			dataToChart.recipeID.push(sortedData[i].recipe_id);
@@ -244,7 +245,43 @@ function buildPlot(){
 
 		console.log("Displaying bar chart");
 		Plotly.newPlot("bar", barData, barLayout, {responsive: true});
+
+		let recipeMenu = d3.select("#selRecipeData");
+		console.log(recipeMenu);
+		console.log(topTen.ID);
+
+		for (let i = 0; i < topTen.ID.length; i++){
+			recipeMenu
+				.append("option")
+				.text(topTen.names[i])
+				.property("value", topTen.ID[i])
+		};
+
+		let searchID = topTen.ID[0];
+		displayRecipe(searchID);
+
 /*
+		recipeMenu.selectAll("option")
+		.data(topTen).enter()
+		.append("option")
+			.attr("value", function (d) { return d.ID; })
+			.text(function (d) { return d.names; });
+		/*
+	    .data(topTen)
+	    .enter()
+	    .append("option")
+	    .attr("value", "Help")
+	    .html("Help");
+
+		/*
+	    .attr("value", function(d){
+			console.log("Hi!")
+			console.log(d)
+	    	return d.ID;
+	    })
+	    .html(function(d){
+	    	return d.names;
+	    });
 		// Plot the bubble chart
 
 		var trace2 = {
@@ -271,19 +308,41 @@ function buildPlot(){
 */
   	});
 };
-/*
+
+// function to display the recipe
+
+function displayRecipe(ID){
+	dataPromise.then(function(data) {
+		let recipeData = data.data;
+		// select the data
+		let showRecipe = recipeData.filter(d => {
+			return d.recipe_id == ID;
+		});
+		console.log(showRecipe);
+
+		let recipeText = d3.select("#showRecipe");
+
+		recipeText.html("")
+		
+		recipeText.append("p")
+			.html(`Recipe: <a href="https://www.food.com/recipe/${showRecipe[0].recipe_id}">${showRecipe[0].name}</a>`);
+
+		recipeText.append("p")
+			.html(`Ingredients: ${showRecipe[0].ingredients}<br />\n
+			Number of Steps: ${showRecipe[0].n_steps}<br />\n
+			Minutes to Cook: ${showRecipe[0].minutes}<br />\n
+			Rating: ${showRecipe[0].rating}<br />\n
+			Number of Voters: ${showRecipe[0].voters}<br />\n
+			`);
+	});
+}
+
 // function to call when select option changed
 function optionChanged(ID) {
-	// update the metadata
-	loadMetadata(ID);
+	// display the recipe
+	displayRecipe(ID);
 
-	// Plot the data for the selected ID
-	buildPlot(ID);
-
-	// Plot the bonus guage chart
-	gaugeChart(ID);
 };
 
 
-*/
 init();
