@@ -81,13 +81,17 @@ function rebuildPlot(){
 
 // function to build the graph
 function buildPlot(){
-	//console.log(ID);
+	//get values from form;
 	let scatterX = d3.select("#scatter-x").property("value");
 	let scatterY = d3.select("#scatter-y").property("value");
 	let sort1 = d3.select("#sort1").property("value");
 	let sort2 = d3.select("#sort2").property("value");
 	let minVoters = parseInt(d3.select("#input-min-voters").property("value"));
 	let maxVoters = parseInt(d3.select("#input-max-voters").property("value"));
+	let minRating = parseInt(d3.select("#input-min-rating").property("value"));
+	let maxRating = parseInt(d3.select("#input-max-rating").property("value"));
+
+
 	console.log(scatterX);
 	console.log(scatterY);
 	console.log(sort1);
@@ -101,6 +105,7 @@ function buildPlot(){
 	console.log(minVoters);
 	console.log(maxVoters);
 
+	// Check voters values are valid, otherwise set default
 	if (isNaN(minVoters)){
 		minVoters=0;
 	};
@@ -108,12 +113,26 @@ function buildPlot(){
 		maxVoters=714;
 	};
 
+	// Check rating values are valid, otherwise set default
+	if (isNaN(minRating)){
+		minRating=0;
+	};
+	if (isNaN(maxRating)){
+		maxRating=5;
+	};
+
+	console.log(typeof minRating);
+	console.log(minRating);
+	console.log(maxRating);
+
 	dataPromise.then(function(data) {
 		let recipeData = data.data;
 	    //console.log(recipeData);
 		console.log(recipeData[9].minutes);
 
-	    let filteredData = recipeData.filter(d => d.voters >= minVoters && d.voters <= maxVoters);
+	    let filteredData = recipeData.filter(d => {
+			return d.voters >= minVoters && d.voters <= maxVoters && d.rating >= minRating && d.rating <= maxRating
+		});
 		let sortedData;
 		if (sort2 != ""){
 			sortedData = filteredData.sort((a,b) => {
@@ -134,6 +153,7 @@ function buildPlot(){
 		let dataToChart = {
 			xValues: [],
 			yValues: [],
+			recipeID: [],
 			recipeNames: [],
 			rating: [],
 			voters: [],
@@ -145,6 +165,7 @@ function buildPlot(){
 		for (let i = 0; i < sortedData.length -1; i++){
 			dataToChart.xValues.push(sortedData[i][scatterX]);
 			dataToChart.yValues.push(sortedData[i][scatterY]);
+			dataToChart.recipeID.push(sortedData[i].recipe_id);
 			dataToChart.recipeNames.push(sortedData[i].name);
 			dataToChart.rating.push(sortedData[i].rating);
 			dataToChart.voters.push(sortedData[i].voters);
@@ -186,13 +207,14 @@ function buildPlot(){
 		let topTen = {recipeValues: [],
 						labels: [],
 						"names": [],
-						sortedOn: sort1
+						ID: []
 					}
 		console.log(topTen);
 		for (let i = 0; i < 10; i++){
 			topTen.recipeValues.push(dataToChart[sort1][i]);
 			topTen.labels.push(dataToChart.recipeNames[i]);
 			topTen.names.push(dataToChart.recipeNames[i]);			
+			topTen.ID.push(dataToChart.recipeID[i]);			
 		};
 		console.log(topTen);
 

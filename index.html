@@ -23,17 +23,11 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <div class="well">
-          <h5>Test Subject ID No.:</h5>
-          <select id="selDataset" onchange="optionChanged(this.value)">
-            
-          </select>
-        </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Chart Options</h3>
           </div>
-          <div id="sample-metadata" class="panel-body">
+          <div id="form-settings" class="panel-body">
             <form id="filter-form">
               <ul class="list-group" id="filters">
                 <div class="panel-body">
@@ -116,8 +110,18 @@
         </div>
       </div>
       <div class="col-md-8">
+        <div id="infobox" class="well">
+          <p>Please use the form on the left to filter the data and explore the charts. If you have any invalid settings, a warning will follow.</p>
+          <p id="warning"></p>
+        </div>
         <div id="scatter"></div>
         <div id="bar"></div>
+        <div class="well">
+          <h5>Recipe:</h5>
+          <select id="selRecipeData" onchange="optionChanged(this.value)">
+            
+          </select>
+        </div>
       </div>
     </div>
     <div class="row">
