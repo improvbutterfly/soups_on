@@ -8,72 +8,13 @@ form.on("click", rebuildPlot);
 
 
 // Set up the base content
-
 function init() {
-
-	dataPromise.then(function(data) {
-		//console.log(data);
-/*
-
-	    let recipeID = data.index;
-		let recipeData = data.data;
-	    //console.log(recipeData);
-
-		d3.select("select").selectAll("option")
-	    .data(recipeID)
-	    .enter()
-	    .append("option")
-	    .attr("value", function(d){
-	    	return d;
-	    })
-	    .html(function(d){
-	    	return d;
-	    });
-*/
-
-	    // set default ID to first ID in data
-	   	//let defaultID = names[0];
-		//console.log(defaultID);
-
-		// update the metadata
-		//loadMetadata(defaultID);
-
-		// Plot the data for the first ID
-		buildPlot();
-
-		// Bonus load gauge chart
-		//gaugeChart(defaultID);
-
-	});
+	// Plot the data
+	buildPlot();
 
 };
-/*
-// function to build the graph
-function loadMetadata(ID){
-	console.log(ID);
-	dataPromise.then(function(data) {
-		  console.log(data);
 
-	    var filteredMetadata = data.metadata.filter(md => md.id === parseInt(ID));
-	    var metadata = filteredMetadata[0];
-
-	    console.log(metadata);
-
-	    // create string with metadata
-	    var mdString = "";
-    	for (key in metadata) {
-    		mdString = mdString.concat(`<strong>${key}:</strong> ${metadata[key]}<br />\n`);
-	    	console.log(`${key}: ${metadata[key]}`)
-		};
-		console.log(mdString);
-
-	    // Update contents of metadata area
-	    d3.select("#sample-metadata")
-	    .html(mdString);
-
-  	});
-};
-*/
+// Function to rebuild after filter options selected
 function rebuildPlot(){
 	d3.event.preventDefault();
 
@@ -143,7 +84,6 @@ function buildPlot(){
 	dataPromise.then(function(data) {
 		let recipeData = data.data;
 	    //console.log(recipeData);
-		console.log(recipeData[9].minutes);
 
 	    let filteredData = recipeData.filter(d => {
 			return d.voters >= minVoters && d.voters <= maxVoters && 
@@ -168,9 +108,9 @@ function buildPlot(){
 		else {
 			sortedData = filteredData.sort((a,b) => b[sort1] - a[sort1]);
 		}
-		console.log(sortedData);
+		//console.log(sortedData);
 
-	    console.log(filteredData);
+	    //console.log(filteredData);
 
 		// Put all data into variables
 		let dataToChart = {
@@ -196,7 +136,7 @@ function buildPlot(){
 			dataToChart.n_steps.push(sortedData[i].n_steps);
 			dataToChart.n_ingredients.push(sortedData[i].n_ingredients);
 		};
-		console.log(dataToChart);
+		//console.log(dataToChart);
 		//console.log(dataToChart.yValues);
 
 
@@ -232,14 +172,14 @@ function buildPlot(){
 						"names": [],
 						ID: []
 					}
-		console.log(topTen);
+		//console.log(topTen);
 		for (let i = 0; i < 10; i++){
 			topTen.recipeValues.push(dataToChart[sort1][i]);
 			topTen.labels.push(dataToChart.recipeNames[i]);
 			topTen.names.push(dataToChart.recipeNames[i]);			
 			topTen.ID.push(dataToChart.recipeID[i]);			
 		};
-		console.log(topTen);
+		//console.log(topTen);
 
 		// Plot bar chart
 		let trace1 = {
@@ -267,8 +207,8 @@ function buildPlot(){
 		Plotly.newPlot("bar", barData, barLayout, {responsive: true});
 
 		let recipeMenu = d3.select("#selRecipeData");
-		console.log(recipeMenu);
-		console.log(topTen.ID);
+		//console.log(recipeMenu);
+		//console.log(topTen.ID);
 
 		// Reset options
 		recipeMenu.html("");
@@ -283,6 +223,14 @@ function buildPlot(){
 		let searchID = topTen.ID[0];
 		displayRecipe(searchID);
 
+		//console.log("data length: ", dataToChart.recipeID.length);
+		d3.select("#warning").html("");
+
+		if (dataToChart.recipeID.length == 0){
+			d3.select("#warning").append("span")
+			.text("Sorry, your filter options did not produce any data. Try again!");
+		};
+
   	});
 };
 
@@ -294,7 +242,7 @@ function displayRecipe(ID){
 		let showRecipe = recipeData.filter(d => {
 			return d.recipe_id == ID;
 		});
-		console.log(showRecipe);
+		//console.log(showRecipe);
 
 		let recipeText = d3.select("#showRecipe");
 
