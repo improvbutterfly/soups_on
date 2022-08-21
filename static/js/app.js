@@ -93,6 +93,8 @@ function buildPlot(){
 	let maxRating = parseInt(d3.select("#input-max-rating").property("value"));
 	let minMinutes = parseInt(d3.select("#input-min-minutes").property("value"));
 	let maxMinutes = parseInt(d3.select("#input-max-minutes").property("value"));
+	let filterIngredient = d3.select("#input-ingredient").property("value");
+	//console.log("filterIngredient: ", filterIngredient);
 
 	/*
 	console.log(scatterX);
@@ -148,6 +150,12 @@ function buildPlot(){
 			d.rating >= minRating && d.rating <= maxRating &&
 			d.minutes >= minMinutes && d.minutes <= maxMinutes
 		});
+		if (filterIngredient != ""){
+			filteredData = filteredData.filter(d => {
+				//console.log(filterIngredient);
+				return d.ingredients.includes(filterIngredient);
+			});
+		}
 		let sortedData;
 		if (sort2 != ""){
 			sortedData = filteredData.sort((a,b) => {
