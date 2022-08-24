@@ -94,14 +94,30 @@ function buildPlot(){
 		});
 		if (filterIngredient != ""){
 			filteredData = filteredData.filter(d => {
+				// if more than one ingredient, split at ',' and find all
+				let ingredients = filterIngredient.split(', ');
+				//console.log("Checking multi ingredients: ", ingredients)
+				for (let j = 0; j < ingredients.length; j++){
+					if (d.ingredients.includes(ingredients[j])==false){
+						return;
+					}
+				}
 				//console.log(filterIngredient);
-				return d.ingredients.includes(filterIngredient);
+				//return d.ingredients.includes(filterIngredient);
+				return d.ingredients;
 			});
 		}
 		if (excludeIngredient != ""){
 			filteredData = filteredData.filter(d => {
-				console.log(excludeIngredient);
-				return !d.ingredients.includes(excludeIngredient);
+				//console.log(excludeIngredient);
+				let ingredients = excludeIngredient.split(', ');
+				for (let j = 0; j < ingredients.length; j++){
+					if (d.ingredients.includes(ingredients[j])==true){
+						return;
+					}
+				}
+				//return !d.ingredients.includes(excludeIngredient);
+				return d.ingredients;
 			});
 		}
 		let sortedData;
