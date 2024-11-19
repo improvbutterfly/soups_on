@@ -1,4 +1,5 @@
 # Soup's On!
+Interactive website to discover the best soup recipes on food.com.
 
 This is just a fun little project I decided to work on as part of a writing competition where the prompt was "Soup's On." I found a recipe dataset and reduced it to just soup recipes and the information I was interested in.
 
